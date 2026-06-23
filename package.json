@@ -1,0 +1,21 @@
+{
+  "name": "js_software",
+  "version": "1.0.0",
+  "description": "Plataforma offline e interactiva para aprender JavaScript construyendo proyectos.",
+  "main": "index.html",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "python -m http.server 4173",
+    "test": "node --test tests/*.test.js",
+    "check": "node --check js/content.js && node --check js/expansion-content.js && node --check js/academic-content.js && node --check js/runner.js && node --check js/validator.js && node --check js/editor.js && node --check js/app.js"
+  },
+  "keywords": ["javascript", "education", "interactive", "offline"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jsdom": "^29.1.1"
+  }
+}

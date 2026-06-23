@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8"><title>JavaScript Lab — Browser smoke test</title></head>
+  <body>
+    <h1>Prueba del motor en navegador</h1>
+    <pre id="status">Ejecutando…</pre>
+    <div id="preview"></div>
+    <script src="../js/runner.js"></script>
+    <script>
+      (async () => {
+        const checks = [];
+        const consoleResult = await CodeRunner.runConsole(
+          "function doble(n) { return n * 2; } console.log(doble(2));",
+          [{ name: "otro valor", expression: "doble(4) === 8" }]
+        );
+        checks.push({ name: "runner de consola y pruebas ocultas", ok: consoleResult.ok && consoleResult.output[0] === "4" && consoleResult.hiddenTests[0].ok });
+
+        const lesson = {
+          html: '<p id="mensaje">Pendiente</p>',
+          checks: [{ selector: "#mensaje", text: "Listo" }]
+        };
+        const domResult = await CodeRunner.runDom(
+          'document.querySelector("#mensaje").textContent = "Listo";',
+          lesson,
+          document.querySelector("#preview")
+        );
+        checks.push({ name: "runner DOM", ok: domResult.ok });
+
+        const passed = checks.every((check) => check.ok);
+        const status = document.querySelector("#status");
+        status.dataset.result = passed ? "pass" : "fail";
+        status.textContent = checks.map((check) => `${check.ok ? "PASS" : "FAIL"} — ${check.name}`).join("\n");
+      })().catch((error) => {
+        const status = document.querySelector("#status");
+        status.dataset.result = "fail";
+        status.textContent = `FAIL — ${error.message}`;
+      });
+    </script>
+  </body>
+</html>
