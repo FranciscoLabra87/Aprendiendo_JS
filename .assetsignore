@@ -1,0 +1,16 @@
+# Excluded from Cloudflare Workers asset upload (gitignore syntax).
+# Deployed site = index.html + css/ + js/ only.
+# node_modules is the critical exclusion: on the build machine wrangler
+# installs workerd (~119 MiB binary) here, exceeding the 25 MiB asset limit.
+node_modules
+.git
+.wrangler
+docs
+tests
+*.log
+*.json
+*.md
+.gitignore
+.gitattributes
+.assetsignore
+wrangler.jsonc
